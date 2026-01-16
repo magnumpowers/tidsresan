@@ -151,7 +151,15 @@ Be concise but specific. Response ONLY the JSON, no other text.`
                 ? [
                     {
                       type: 'text',
-                      text: `Transform this image to show how this exact location and view would have looked during ${selectedPeriod.name} (${selectedPeriod.yearLabel}) in Scandinavia. Keep the same composition, viewing angle, and horizon line, but replace all modern elements with the historical scene. ${imagePrompt}`
+                      text: hasPerson
+                        ? `IMPORTANT: This is a photo of a PERSON. You must keep this EXACT SAME PERSON with their EXACT SAME FACE, facial features, glasses, facial hair, expression, and pose. ONLY change their clothing, hairstyle, and accessories to match ${selectedPeriod.name} (${selectedPeriod.yearLabel}) in Scandinavia.
+
+The person should wear: ${getPeriodClothing(selectedPeriod.yearStart).description}
+Hair should be: ${getPeriodClothing(selectedPeriod.yearStart).hair}
+Accessories: ${getPeriodClothing(selectedPeriod.yearStart).accessories}
+
+DO NOT change the person's face, body, pose, or expression. DO NOT generate a different person or a landscape. Keep the same person, just dress them historically.`
+                        : `Transform this image to show how this exact location and view would have looked during ${selectedPeriod.name} (${selectedPeriod.yearLabel}) in Scandinavia. Keep the same composition, viewing angle, and horizon line, but replace all modern elements with the historical scene. ${imagePrompt}`
                     },
                     {
                       type: 'image_url',
