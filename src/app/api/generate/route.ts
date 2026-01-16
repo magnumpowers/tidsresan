@@ -150,22 +150,26 @@ Be concise but specific. Response ONLY the JSON, no other text.`
               content: imageBase64
                 ? [
                     {
-                      type: 'text',
-                      text: hasPerson
-                        ? `IMPORTANT: This is a photo of a PERSON. You must keep this EXACT SAME PERSON with their EXACT SAME FACE, facial features, glasses, facial hair, expression, and pose. ONLY change their clothing, hairstyle, and accessories to match ${selectedPeriod.name} (${selectedPeriod.yearLabel}) in Scandinavia.
-
-The person should wear: ${getPeriodClothing(selectedPeriod.yearStart).description}
-Hair should be: ${getPeriodClothing(selectedPeriod.yearStart).hair}
-Accessories: ${getPeriodClothing(selectedPeriod.yearStart).accessories}
-
-DO NOT change the person's face, body, pose, or expression. DO NOT generate a different person or a landscape. Keep the same person, just dress them historically.`
-                        : `Transform this image to show how this exact location and view would have looked during ${selectedPeriod.name} (${selectedPeriod.yearLabel}) in Scandinavia. Keep the same composition, viewing angle, and horizon line, but replace all modern elements with the historical scene. ${imagePrompt}`
-                    },
-                    {
                       type: 'image_url',
                       image_url: {
                         url: `data:image/jpeg;base64,${imageBase64}`
                       }
+                    },
+                    {
+                      type: 'text',
+                      text: hasPerson
+                        ? `COSTUME CHANGE ONLY - Keep the exact same person, same face, same pose, same background composition.
+
+TASK: Change ONLY this person's clothes and hair to ${selectedPeriod.name} (${selectedPeriod.yearLabel}) Scandinavian style.
+
+NEW OUTFIT: ${getPeriodClothing(selectedPeriod.yearStart).description}
+NEW HAIRSTYLE: ${getPeriodClothing(selectedPeriod.yearStart).hair}
+ACCESSORIES: ${getPeriodClothing(selectedPeriod.yearStart).accessories}
+
+KEEP UNCHANGED: The person's face, skin, eyes, expression, body position, hands, and the general composition.
+
+This is like a movie costume department changing an actor's wardrobe - same person, different historical clothes.`
+                        : `Transform this image to show how this exact location and view would have looked during ${selectedPeriod.name} (${selectedPeriod.yearLabel}) in Scandinavia. Keep the same composition, viewing angle, and horizon line, but replace all modern elements with the historical scene. ${imagePrompt}`
                     }
                   ]
                 : `Generate a photorealistic image: ${imagePrompt}`
